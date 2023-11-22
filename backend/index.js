@@ -2,8 +2,10 @@ import express from 'express'
 import cors from 'cors'
 import pg from 'pg'
 
-import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER, FRONTEND_URL, PORT } from './config'
+import { DB_HOST, DB_DATABASE, DB_PASSWORD, DB_PORT, DB_USER, FRONTEND_URL, PORT } from './config.js'
 
+
+console.log(DB_HOST);
 
 const app = express()
 const pool = new pg.Pool({
