@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   const [result, setResult] = useState("");
 
-  const URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  const URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
   return (
     <>
