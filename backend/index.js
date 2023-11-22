@@ -1,17 +1,30 @@
 import express from 'express'
 import cors from 'cors'
+import pg from 'pg'
+
+import { DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER, FRONTEND_URL, PORT } from './config'
+
 
 const app = express()
+const pool = new pg.Pool({
+  database: DB_DATABASE,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  port: DB_PORT,
+  host: DB_HOST
+})
+
 
 app.use(cors({
-  origin: "http://localhost:5173"
+  origin: FRONTEND_URL
 }))
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.get('/users', (req, res) => {
+app.get('/users', async (req, res) => {
+
   res.send({
     users: [
       { id: 1, name: 'Alice' },
@@ -20,6 +33,16 @@ app.get('/users', (req, res) => {
   })
 })
 
-app.listen(3000, () => {
+app.get('/ping', async (req, res) => {
+
+  const result = await pool.query('SELECT NOW ()')
+  console.log("wtf");
+
+  res.send({
+    pong: result.rows[0].now
+  });
+})
+
+app.listen(PORT, () => {
   console.log('Server started on port 3000!')
 })
